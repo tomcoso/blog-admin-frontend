@@ -1,19 +1,12 @@
-import { useEffect, useState } from "react";
+type HeaderProps = {
+  authState: boolean;
+};
 
-const Header = () => {
-  const [user, setUser] = useState(false);
-
-  useEffect(() => {
-    const jwt = sessionStorage.getItem("jwt");
-    if (jwt) {
-      setUser(true);
-    }
-  }, []);
-
+const Header = ({ authState }: HeaderProps) => {
   return (
     <header className="header">
-      <p>User {user ? "" : "no"} logged in</p>
-      {!user && <a href="/login">Log In</a>}
+      <p>Admin {authState ? "" : "not"} logged in</p>
+      {!authState && <a href="/login">Log In</a>}
     </header>
   );
 };
