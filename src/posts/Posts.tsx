@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import Post from "./components/Post";
 import { PostSchema } from "./postTypes";
 import { useEffect } from "react";
+import "./styling/posts.scss";
 
 const Posts = () => {
   const postData = useLoaderData();
@@ -13,17 +14,15 @@ const Posts = () => {
 
   return (
     <main>
-      {postData ? (
+      {(postData as PostSchema[]).length ? (
         <>
-          {(postData as PostSchema[]).length ? (
-            (postData as PostSchema[]).forEach((post) => <Post {...post} />)
-          ) : (
-            <p>No posts.</p>
-          )}
+          {(postData as PostSchema[]).map((post) => (
+            <Post data={post} key={post._id} />
+          ))}
         </>
       ) : (
         <>
-          <p>loading..</p>
+          <p>No posts.</p>
         </>
       )}
     </main>

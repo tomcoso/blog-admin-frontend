@@ -11,4 +11,8 @@ type PostsResponse = {
   data: Array<PostSchema>;
 };
 
-export type { PostSchema, PostsResponse };
+type PostProps = {
+  data: PostSchema;
+};
+
+export type { PostSchema, PostsResponse, PostProps };
