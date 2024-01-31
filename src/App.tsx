@@ -6,6 +6,7 @@ import Header from "./components/Header";
 function App() {
   const authState = useLoaderData();
   // https://tomcoso-blog.onrender.com
+  // TODO setup context for auth token and state
 
   return (
     <>

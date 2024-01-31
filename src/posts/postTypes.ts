@@ -3,8 +3,16 @@ type PostSchema = {
   title: string;
   text: string;
   author: string;
-  timestamp: Date;
+  timestamp: string;
   status: "published" | "unpublished";
+};
+
+type CommentSchema = {
+  _id: string;
+  title: string;
+  text: string;
+  username: string;
+  timestamp: string;
 };
 
 type PostsResponse = {
@@ -15,4 +23,4 @@ type PostProps = {
   data: PostSchema;
 };
 
-export type { PostSchema, PostsResponse, PostProps };
+export type { PostSchema, PostsResponse, PostProps, CommentSchema };

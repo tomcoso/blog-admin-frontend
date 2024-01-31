@@ -1,6 +1,8 @@
 // login api calls
 // https://tomcoso-blog.onrender.com
 
+import { DateTime } from "luxon";
+
 type tokenResponse = {
   message: string;
   token: string;
@@ -16,6 +18,8 @@ const handleLogin = async (email: string, password: string): Promise<void> => {
   const resData = (await res.json()) as tokenResponse;
   console.log(resData.message);
   sessionStorage.setItem("jwt", resData.token);
+  const expDt: DateTime = DateTime.now().plus({ hours: 12 }) as DateTime;
+  sessionStorage.setItem("expJwt", expDt.toMillis().toString());
   return Promise.resolve();
 };
 
