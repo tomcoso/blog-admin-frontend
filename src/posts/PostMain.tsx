@@ -2,7 +2,8 @@ import { useLoaderData, useNavigate, useParams } from "react-router";
 import { CommentSchema, PostSchema } from "./postTypes";
 import { makeRequest } from "../auth/utils/authUtils";
 import { RequestArgs, RequestResponse } from "../auth/utils/authTypes";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { RedirectDispatchContext } from "../context/redirectContext";
 
 type ResponseType = {
   post: PostSchema;
@@ -13,6 +14,8 @@ const PostMain = () => {
   const { post, comments }: ResponseType = useLoaderData() as ResponseType;
   const params = useParams();
   const navigate = useNavigate();
+
+  const redirectDispatch = useContext(RedirectDispatchContext);
 
   const [commentDel, setCommentDel] = useState("");
 
@@ -27,6 +30,10 @@ const PostMain = () => {
         try {
           const res: RequestResponse = await makeRequest(reqData);
           if (res.status == "badAuth") {
+            redirectDispatch({
+              type: "write",
+              path: `/posts/${params.postid}`,
+            });
             navigate("/login");
             return Promise.reject("Redirecting to login..");
           }
@@ -41,7 +48,7 @@ const PostMain = () => {
         .then(() => navigate(`/posts/${params.postid}`))
         .catch((err) => console.error(err));
     }
-  }, [commentDel, params, navigate]);
+  }, [commentDel, params, navigate, redirectDispatch]);
 
   return (
     <main>
